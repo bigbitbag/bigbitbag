@@ -2,7 +2,7 @@ $ErrorActionPreference = "Stop"
 
 # 仅生成 _sidebar.md 和 IMAGES.md，不执行 git add、commit 或 push。
 $Root = (Resolve-Path -LiteralPath $PSScriptRoot).Path.TrimEnd([char[]]@('\', '/'))
-$IgnoredDirNames = @(".git", ".github", ".vscode", "node_modules", "vendor", "bin", "obj")
+$IgnoredDirNames = @(".git", ".github", ".vscode", "node_modules", "vendor", "bin", "obj", "theme", "archive")
 $ImageExtensions = @(".png", ".jpg", ".jpeg", ".gif", ".webp", ".svg", ".bmp", ".avif", ".tif", ".tiff")
 
 function Get-RelativePath([string]$FullPath) {

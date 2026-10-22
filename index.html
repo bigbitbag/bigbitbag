@@ -5,26 +5,26 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>我的知识库</title>
+  <meta name="color-scheme" content="light dark">
+  <script>
+    (function () {
+      var mode = 'system';
+      try { mode = localStorage.getItem('knowledge-theme') || mode; } catch (_) {}
+      if (!['light', 'dark', 'system'].includes(mode)) mode = 'system';
+      document.documentElement.dataset.theme = mode === 'system'
+        ? (matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : mode;
+      document.documentElement.dataset.mode = mode;
+    })();
+  </script>
 
   <!-- 基础样式 -->
   <link rel="stylesheet"
-        href="https://cdn.jsdelivr.net/npm/docsify@5/dist/themes/core.min.css">
+        href="./theme/vendor/docsify-core.min.css">
 
-  <!-- Vue 主题：改善正文、标题、代码块的视觉效果 -->
+  <!-- 中文阅读主题 -->
   <link rel="stylesheet"
-        href="https://cdn.jsdelivr.net/npm/docsify@5/dist/themes/addons/vue.min.css">
+        href="./theme/theme.css">
 
-  <style>
-    :root {
-      --theme-color: #2878d0;
-      --base-font-size: 16px;
-      --content-max-width: 1000px;
-    }
-
-    .markdown-section pre {
-      border-radius: 8px;
-    }
-  </style>
 </head>
 <body>
   <div id="app"></div>
@@ -34,7 +34,8 @@
       name: '我的知识库',
       homepage: 'HOME.md',
       loadSidebar: true,
-      subMaxLevel: 2,
+      alias: { '/.*/_sidebar.md': '/_sidebar.md' },
+      subMaxLevel: 0,
       auto2top: true,
 
       search: {
@@ -48,12 +49,21 @@
   </script>
 
   <!-- Docsify 主程序 -->
-  <script src="https://cdn.jsdelivr.net/npm/docsify@5"></script>
+  <script src="./theme/theme.js"></script>
+  <script src="./theme/vendor/docsify.min.js"></script>
+  <script src="./theme/vendor/prism-bash.min.js"></script>
+  <script src="./theme/vendor/prism-python.min.js"></script>
+  <script src="./theme/vendor/prism-powershell.min.js"></script>
+  <script src="./theme/vendor/prism-json.min.js"></script>
+  <script src="./theme/vendor/prism-yaml.min.js"></script>
+  <script src="./theme/vendor/prism-makefile.min.js"></script>
+  <script src="./theme/vendor/prism-markdown.min.js"></script>
+  <script src="./theme/vendor/prism-markup-templating.min.js"></script>
+  <script src="./theme/vendor/prism-php.min.js"></script>
+  <script src="./theme/vendor/prism-sql.min.js"></script>
 
   <!-- 全文搜索 -->
-  <script src="https://cdn.jsdelivr.net/npm/docsify@5/dist/plugins/search.min.js"></script>
+  <script src="./theme/vendor/search.min.js"></script>
 
-  <!-- 代码块复制按钮 -->
-  <script src="https://cdn.jsdelivr.net/npm/docsify-copy-code/dist/docsify-copy-code.min.js"></script>
 </body>
 </html>

@@ -1,0 +1,14 @@
+Vendored assets; no build step or CDN requests required.
+Docsify 5.0.0: docsify.min.js, docsify-core.min.css, search.min.js
+Source: https://cdn.jsdelivr.net/npm/docsify@5.0.0/dist/
+MIT license: DOCSIFY-LICENSE.txt
+Use dist/; lib/ contains the legacy Docsify 4 build.
+
+Prism 1.30.0: prism-*.min.js
+Source: https://cdn.jsdelivr.net/npm/prismjs@1.30.0/components/
+MIT license: PRISM-LICENSE.txt
+Core markup, CSS, JavaScript and C-like grammars are provided by Docsify.
+PHP requires markup-templating; keep script order in index.html.
+
+Existing Markdown may contain remote images and external links.
+Those references are independent of the local theme assets.

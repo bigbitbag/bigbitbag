@@ -6,7 +6,7 @@ from urllib.parse import quote
 from html import escape
 
 ROOT = Path(__file__).resolve().parent
-IGNORE = {".git", ".github", ".vscode", "node_modules", "vendor", "__pycache__", ".venv", "venv", "dist", "build"}
+IGNORE = {".git", ".github", ".vscode", "node_modules", "vendor", "__pycache__", ".venv", "venv", "dist", "build", "theme", "archive"}
 EXCLUDE_MD = {"HOME.md", "_sidebar.md", "IMAGES.md"}
 IMAGE_EXT = {".png", ".jpg", ".jpeg", ".gif", ".webp", ".svg", ".bmp", ".avif"}
 

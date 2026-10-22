@@ -1,0 +1,142 @@
+/* Local Chinese reading theme, built on Docsify 5. */
+:root {
+ color-scheme:light; --color-bg:#fff; --color-text:#343b48; --strong-color:#1c2533; --theme-color:#326bc6;
+ --surface:#f7f8fa; --border-color:#e5e8ee; --muted:#717b8a; --active-bg:#eaf0fb;
+ --inline-code-bg:#edf1f5; --inline-code-border:#ccd5df; --inline-code-text:#24374b;
+ --article-link:#0969c3; --article-link-hover:#034b91;
+ --font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Hiragino Sans GB","Microsoft YaHei","Noto Sans CJK SC",sans-serif;
+ --font-size:17px; --font-weight:400; --line-height:1.85; --font-family-mono:"Cascadia Code","SFMono-Regular",Consolas,monospace;
+ --font-size-mono:14px; --font-weight-mono:400; --content-max-width:820px; --sidebar-width:260px; --sidebar-bg:var(--surface); --sidebar-font-size:14px;
+ --code-bg:#eef1f6; --code-color:#a33d59; --codeblock-bg:#f6f8fb; --codeblock-color:#344054;
+ --codeblock-comment:#737e8e; --codeblock-keyword:#8250b5; --codeblock-function:#9b4b1b; --codeblock-selector:#236c49; --codeblock-property:#1d609a; --codeblock-tag:#a73550; --codeblock-variable:#955b14; --codeblock-operator:#536176; --codeblock-punctuation:#677487;
+ --heading-line-height:1.45; --blockquote-color:var(--color-text); --blockquote-bg:var(--surface); --blockquote-padding:12px 18px; --scroll-padding-top:32px;
+}
+:root[data-theme="dark"] {
+ color-scheme:dark; --color-bg:#1b1d23; --color-text:#c9cdd6; --strong-color:#edf0f5; --surface:#22252d; --border-color:#343945; --muted:#9aa4b4; --theme-color:#8bb5ff; --active-bg:#2b374e;
+ --inline-code-bg:#303846; --inline-code-border:#526078; --inline-code-text:#eef3fc;
+ --article-link:#8abaff; --article-link-hover:#bed8ff;
+ --code-bg:#2b303c; --code-color:#e7a4b4; --codeblock-bg:#232730; --codeblock-color:#d6deeb;
+ --codeblock-comment:#94a0b3; --codeblock-keyword:#c5a5ef; --codeblock-function:#efbd8e; --codeblock-selector:#a2d3a4; --codeblock-property:#8cccf0; --codeblock-tag:#f29eb0; --codeblock-variable:#efd090; --codeblock-operator:#bdc8db; --codeblock-punctuation:#aab5c7;
+}
+html{background:var(--color-bg)} body{-webkit-font-smoothing:antialiased;overflow-wrap:anywhere}
+.markdown-section{width:100%;box-sizing:border-box;margin:0 auto}
+button,input,select{font:inherit} button{cursor:pointer} :focus-visible{outline:2px solid var(--theme-color);outline-offset:4px}
+.sidebar{padding:30px 16px 100px;border-right:1px solid var(--border-color)}
+.sidebar .app-name{margin:0 12px 24px;text-align:left;font-size:21px;font-weight:700;letter-spacing:.02em}
+.sidebar .app-name::after{content:"学习 · 记录 · 实践";display:block;margin-top:7px;color:var(--muted);font-size:12px;font-weight:400;letter-spacing:.12em}
+.sidebar .search{margin:0 0 22px;padding:0 4px 16px;border-bottom:1px solid var(--border-color)}
+.sidebar .search input{font-size:14px;border:1px solid var(--border-color);border-radius:8px;background:var(--color-bg);padding:9px 12px;color:var(--color-text);width:100%}
+.sidebar-nav ul{padding-left:16px} .sidebar-nav>ul{padding-left:0} .sidebar-nav li{position:relative;margin:3px 0}
+.sidebar-nav a{display:block;border:0!important;padding:6px 10px;border-radius:6px;line-height:1.65;white-space:normal;color:var(--color-text)}
+.sidebar-nav a:hover{background:var(--active-bg);color:var(--theme-color);text-decoration:none}
+.sidebar-nav li.active>a{background:var(--active-bg);color:var(--theme-color);font-weight:600}
+.sidebar-nav li.has-children>a,.folder-label{padding-right:30px} .folder-label{display:block;padding:6px 30px 6px 10px;font-weight:600}
+.sidebar-nav button.nav-disclosure {
+ position:absolute; right:2px; top:0; display:grid; place-items:center;
+ width:28px; height:35px; min-width:0; min-height:0; box-sizing:border-box;
+ margin:0; padding:0; border:0; border-radius:0; box-shadow:none;
+ background:transparent; color:var(--muted); line-height:1;
+}
+.sidebar-nav button.nav-disclosure:hover { background:transparent; color:var(--theme-color); outline:none; }
+.sidebar-nav button.nav-disclosure:focus-visible { outline:2px solid var(--theme-color); outline-offset:-3px; }
+.sidebar-nav button.nav-disclosure::before {
+ content:""; display:block; width:6px; height:6px;
+ border-right:1.5px solid currentColor; border-bottom:1.5px solid currentColor;
+ transform:translateY(-2px) rotate(45deg);
+}
+.sidebar-nav button.nav-disclosure[aria-expanded="false"]::before { transform:translateX(-2px) rotate(-45deg); }
+.sidebar-nav ul[hidden]{display:none!important}
+.theme-control{position:fixed;bottom:0;left:0;width:259px;padding:14px 22px;background:var(--surface);border-top:1px solid var(--border-color);display:flex;align-items:center;justify-content:space-between;gap:12px;color:var(--muted);font-size:12px;z-index:25}
+.theme-control select{max-width:140px;border:1px solid var(--border-color);background:var(--color-bg);color:var(--color-text);padding:6px 8px;border-radius:6px;font-size:12px}
+.content{padding-top:0}
+.markdown-section{padding:48px 42px 100px;max-width:820px;min-width:0} .markdown-section>:first-child{margin-top:0}
+/* Python-documentation-inspired typography, with Chinese reading sizes. */
+.markdown-section :is(h1,h2,h3,h4,h5,h6){font-weight:500;letter-spacing:0;line-height:1.45}
+.markdown-section h1{font-size:1.95rem;margin:0 0 1em;padding:0;border:0}
+.markdown-section h2{font-size:1.5rem;margin:1.65em 0 .65em;padding:0;border:0}
+.markdown-section h3{font-size:1.22rem;margin:1.5em 0 .55em}
+.markdown-section h4{font-size:1.06rem;margin:1.4em 0 .5em}
+.markdown-section p{margin:.85em 0;line-height:1.75}
+.markdown-section li{line-height:1.75}
+.markdown-section li+li{margin-top:.25em}
+.markdown-section :is(ul,ol){padding-inline-start:1.6em}
+.markdown-section li>p{margin:.45em 0}
+.markdown-section blockquote{margin:1.2em 0;border-left:3px solid var(--theme-color);border-radius:0 8px 8px 0}
+.markdown-section blockquote p{margin:.25em 0}
+.markdown-section a[href]:not(.anchor):not(.article-toc a){
+ color:var(--article-link);text-decoration-line:underline;
+ text-decoration-color:currentColor;text-underline-offset:3px;text-decoration-thickness:1px;
+}
+.markdown-section a[href]:not(.anchor):not(.article-toc a):hover{
+ color:var(--article-link-hover);text-decoration-thickness:2px;
+}
+.markdown-section hr{margin:1.6em 0;border-color:var(--border-color)}
+.markdown-section img{border-radius:7px;max-width:100%;height:auto}
+.markdown-section table{display:block;max-width:100%;width:max-content;overflow-x:auto;border-collapse:collapse;font-size:.9rem}
+.markdown-section th,.markdown-section td{padding:11px 16px;border:1px solid var(--border-color);min-width:75px} .markdown-section th{background:var(--surface);color:var(--strong-color);font-weight:600}
+.markdown-section :not(pre)>code{
+ padding:.12em .35em;border:1px solid var(--inline-code-border);border-radius:4px;
+ font-size:.9em;color:var(--inline-code-text);background:var(--inline-code-bg);
+ box-decoration-break:clone;-webkit-box-decoration-break:clone;
+}
+.markdown-section a[href]:not(.anchor):not(.article-toc a)>code{color:inherit}
+.code-block{margin:1.6em 0;border:1px solid var(--border-color);border-radius:9px;overflow:hidden;background:var(--codeblock-bg)}
+.code-toolbar{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:7px 14px;border-bottom:1px solid var(--border-color);font-family:var(--font-family-mono);font-size:12px;color:var(--muted)}
+.copy-code{padding:3px 8px;border:1px solid var(--border-color);border-radius:5px;color:var(--color-text);background:var(--color-bg);font-family:var(--font-family);font-size:12px}
+.copy-code:hover{color:var(--theme-color);border-color:var(--theme-color)}
+.markdown-section .code-block pre{margin:0;padding:18px 20px;border:0;border-radius:0;overflow:auto;max-height:650px} .markdown-section pre::after{display:none}
+.markdown-section pre code{display:block;padding:0;line-height:1.75;font-size:14px;tab-size:4;white-space:pre;overflow-wrap:normal;word-break:normal}
+.article-toc{position:fixed;top:48px;right:max(22px,calc((100vw - 1500px)/2));width:200px;max-height:calc(100dvh - 90px);overflow:auto;font-size:12px;line-height:1.6}
+.article-toc summary{font-size:12px;font-weight:600;color:var(--strong-color);letter-spacing:.08em;cursor:pointer;margin-bottom:15px}
+.article-toc nav{border-left:1px solid var(--border-color)} .article-toc a{display:block;padding:5px 12px;color:var(--muted);text-decoration:none;border-left:2px solid transparent;margin-left:-1px}
+.article-toc a.toc-sub{padding-left:23px} .article-toc a:hover,.article-toc a[aria-current="location"]{color:var(--theme-color)}
+.article-toc a[aria-current="location"]{border-left-color:var(--theme-color);background:var(--active-bg)} .toc-empty{padding-left:12px;color:var(--muted)}
+@media(min-width:1280px){.content{margin-right:240px}}
+@media(max-width:1279px){.article-toc{position:static;width:auto;max-height:none;margin-bottom:28px;padding:12px 16px;border:1px solid var(--border-color);border-radius:8px;background:var(--surface)} .article-toc summary{margin-bottom:0;letter-spacing:0}.article-toc[open] summary{margin-bottom:10px}.article-toc nav{max-height:260px;overflow:auto}}
+@media(max-width:768px){:root{--font-size:16px}.markdown-section{padding:60px 22px 64px}.markdown-section h1{font-size:1.8rem}.sidebar{padding-top:24px}.markdown-section .code-block pre{padding:14px}}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{scroll-behavior:auto!important;transition:none!important}}
+@media print{.sidebar,.sidebar-toggle,.article-toc,.theme-control,.copy-code{display:none!important}.content{margin:0!important;padding:0!important}.markdown-section{max-width:none;padding:0}}
+/* Docsify 5 wraps top-level navigation links in paragraphs. */
+.sidebar-nav p{margin:0}.sidebar-nav .has-children>p>a{padding-right:32px}
+.sidebar-nav li.active>p>a{background:var(--active-bg);color:var(--theme-color);font-weight:600}
+.sidebar-nav .page-link{background:transparent}
+body:not(:has(.sidebar.show)) .theme-control{display:none}
+body:has(.sidebar.show) .theme-control{display:flex}
+.markdown-section{max-width:100%;margin-top:0}
+.markdown-section .article-toc{margin-block:0}
+.markdown-section .code-block pre[data-lang]{background:var(--codeblock-bg);color:var(--codeblock-color)}
+.markdown-section .code-block pre[data-lang]>code{max-height:600px}
+@media(max-width:768px){
+ main>.content,body:has(.sidebar.show) main>.content{left:0}
+ .sidebar-toggle,body:has(.sidebar.show) .sidebar-toggle{position:fixed;top:12px;bottom:auto;left:12px;width:36px;height:36px;padding:0;z-index:40;translate:0}
+ .sidebar-toggle-button{width:36px;height:36px;margin:0;border-radius:7px}
+ .sidebar{z-index:35;padding-top:64px}
+ body:has(.sidebar.show) .sidebar-toggle{left:210px}
+ .theme-control{z-index:40}
+ .markdown-section{width:100%;max-width:100%;padding:64px 22px 64px}
+ .markdown-section .article-toc{margin:0 0 28px}
+}
+/* Keep controls above Docsify's mobile backdrop (z-index 40). */
+.theme-control{z-index:65}
+@media(max-width:768px){.sidebar{z-index:60}.sidebar-toggle,body:has(.sidebar.show) .sidebar-toggle{z-index:70}.theme-control{z-index:65}.markdown-section table th,.markdown-section table td{min-width:100px}}
+
+/* A single arrow at the sidebar edge, instead of a tall floating handle. */
+.sidebar-toggle,body:has(.sidebar.show) .sidebar-toggle {
+ position:fixed; top:28px; bottom:auto; left:0; width:28px; height:32px;
+ padding:0; margin:0; border:0; border-radius:0; background:transparent; z-index:70;
+}
+.sidebar-toggle .sidebar-toggle-button {
+ display:grid; place-items:center; width:28px; height:32px; margin:0;
+ border:0; border-radius:0; background:transparent; color:var(--muted);
+}
+.sidebar-toggle .sidebar-toggle-button span{display:none}
+.sidebar-toggle .sidebar-toggle-button::before{
+ content:""; width:7px; height:7px; border-right:1.5px solid currentColor;
+ border-bottom:1.5px solid currentColor; transform:rotate(-45deg);
+}
+body:has(.sidebar.show) .sidebar-toggle .sidebar-toggle-button::before{transform:rotate(135deg)}
+.sidebar-toggle:hover,.sidebar-toggle:hover .sidebar-toggle-button{background:transparent;color:var(--theme-color)}
+@media(max-width:768px){
+ .sidebar-toggle,body:has(.sidebar.show) .sidebar-toggle{top:14px;left:12px;translate:0}
+ body:has(.sidebar.show) .sidebar-toggle{left:220px}
+}
