@@ -5,7 +5,26 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>我的知识库</title>
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/docsify@5/dist/themes/core.min.css">
+
+  <!-- 基础样式 -->
+  <link rel="stylesheet"
+        href="https://cdn.jsdelivr.net/npm/docsify@5/dist/themes/core.min.css">
+
+  <!-- Vue 主题：改善正文、标题、代码块的视觉效果 -->
+  <link rel="stylesheet"
+        href="https://cdn.jsdelivr.net/npm/docsify@5/dist/themes/addons/vue.min.css">
+
+  <style>
+    :root {
+      --theme-color: #2878d0;
+      --base-font-size: 16px;
+      --content-max-width: 1000px;
+    }
+
+    .markdown-section pre {
+      border-radius: 8px;
+    }
+  </style>
 </head>
 <body>
   <div id="app"></div>
@@ -17,6 +36,7 @@
       loadSidebar: true,
       subMaxLevel: 2,
       auto2top: true,
+
       search: {
         paths: 'auto',
         placeholder: '搜索笔记',
@@ -27,7 +47,13 @@
     };
   </script>
 
+  <!-- Docsify 主程序 -->
   <script src="https://cdn.jsdelivr.net/npm/docsify@5"></script>
+
+  <!-- 全文搜索 -->
   <script src="https://cdn.jsdelivr.net/npm/docsify@5/dist/plugins/search.min.js"></script>
+
+  <!-- 代码块复制按钮 -->
+  <script src="https://cdn.jsdelivr.net/npm/docsify-copy-code/dist/docsify-copy-code.min.js"></script>
 </body>
 </html>
