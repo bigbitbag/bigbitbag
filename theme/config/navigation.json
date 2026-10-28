@@ -1,0 +1,32 @@
+{
+  "exclude": [
+    "theme",
+    "archive",
+    "node_modules",
+    "vendor",
+    "dist",
+    "build",
+    "venv",
+    "__pycache__"
+  ],
+  "folders": {
+    "computer": {
+      "label": "计算机学习",
+      "order": 1
+    },
+    "CTF": {
+      "label": "CTF 与 Web 安全",
+      "order": 2
+    }
+  },
+  "links": [
+    {
+      "label": "首页",
+      "path": "/"
+    },
+    {
+      "label": "图片索引",
+      "path": "theme/generated/images.md"
+    }
+  ]
+}

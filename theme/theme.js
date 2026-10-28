@@ -24,7 +24,7 @@
     root.dataset.mode = mode;
     root.dataset.theme = mode === 'system' ? (system.matches ? 'dark' : 'light') : mode;
   }
-  var initial = 'system';
+  var initial = window.knowledgeSite.defaultTheme || 'system';
   try { initial = localStorage.getItem('knowledge-theme') || initial; } catch (_) {}
   applyTheme(['light', 'dark', 'system'].includes(initial) ? initial : 'system');
   system.addEventListener('change', function () {
@@ -42,7 +42,12 @@
     var control = document.createElement('div');
     control.className = 'theme-control';
     control.innerHTML = '<label for="theme-mode">外观</label><select id="theme-mode" aria-label="选择外观模式"><option value="system">跟随系统</option><option value="light">浅色</option><option value="dark">深色</option></select>';
-    document.body.appendChild(control);
+    document.querySelector('.sidebar').appendChild(control);
+    var brand = document.querySelector('.app-name');
+    if (brand && !document.querySelector('.site-description')) {
+      var intro = document.createElement('p'); intro.className = 'site-description'; intro.textContent = window.knowledgeSite.description || ''; brand.after(intro);
+      var repo = document.createElement('a'); repo.className = 'repository-link'; repo.textContent = 'GitHub ↗'; repo.href = window.knowledgeSite.repository; repo.target = '_blank'; repo.rel = 'noopener noreferrer'; intro.after(repo);
+    }
     var select = control.querySelector('select');
     select.value = root.dataset.mode;
     select.addEventListener('change', function () {
@@ -134,7 +139,12 @@
         button.focus({ preventScroll: true });
         setTimeout(function () { button.textContent = '复制'; }, 2200);
       });
-      toolbar.append(language, button);
+      var actions = document.createElement('div');
+      var wrapButton = document.createElement('button'); wrapButton.type = 'button'; wrapButton.textContent = '换行'; wrapButton.setAttribute('aria-pressed', 'false');
+      wrapButton.onclick = function () { var active = wrap.classList.toggle('wrap-lines'); wrapButton.setAttribute('aria-pressed', String(active)); };
+      var fold = document.createElement('button'); fold.type = 'button'; fold.textContent = '折叠'; fold.setAttribute('aria-expanded', 'true');
+      fold.onclick = function () { pre.hidden = !pre.hidden; fold.textContent = pre.hidden ? '展开' : '折叠'; fold.setAttribute('aria-expanded', String(!pre.hidden)); };
+      actions.append(wrapButton, fold, button); toolbar.append(language, actions);
       pre.parentNode.insertBefore(wrap, pre);
       wrap.append(toolbar, pre);
       pre.tabIndex = 0;
@@ -144,51 +154,42 @@
   function buildToc(article) {
     if (observer) observer.disconnect();
     if (onScroll) window.removeEventListener('scroll', onScroll);
-    document.querySelectorAll('.article-toc').forEach(function (old) { old.remove(); });
-    var headings = Array.from(article.querySelectorAll('h2, h3'));
-    var toc = document.createElement('details');
-    toc.className = 'article-toc';
-    toc.open = matchMedia('(min-width: 1280px)').matches;
-    var summary = document.createElement('summary');
-    summary.textContent = '本页目录';
-    var nav = document.createElement('nav');
-    nav.setAttribute('aria-label', '本页目录');
+    var depth = Math.max(1, Math.min(6, Number(window.knowledgeSite.tocDepth) || 6));
+    var headings = Array.from(article.querySelectorAll('h1,h2,h3,h4,h5,h6')).filter(function(h){ return Number(h.tagName.slice(1)) <= depth; });
+    var used = new Set();
+    headings.forEach(function(h,i){ var id=h.id || 'section-'+i; while(used.has(id)) id+='-section-'+i; used.add(id); h.id=id; });
     var links = new Map();
-    headings.forEach(function (heading, index) {
-      if (!heading.id) heading.id = 'section-' + index;
-      var source = heading.querySelector('a.anchor');
-      var link = document.createElement('a');
-      link.href = source ? source.getAttribute('href') : location.hash.split('?')[0] + '?id=' + encodeURIComponent(heading.id);
-      link.textContent = heading.textContent;
-      if (heading.tagName === 'H3') link.className = 'toc-sub';
-      nav.appendChild(link);
-      links.set(heading, link);
-    });
-    if (!headings.length) {
-      var empty = document.createElement('span'); empty.className = 'toc-empty'; empty.textContent = '本页暂无章节'; nav.appendChild(empty);
-    }
-    toc.append(summary, nav);
-    article.prepend(toc);
-    if (!headings.length) return;
-    function updateCurrent() {
-      var current = headings[0];
-      headings.forEach(function (heading) { if (heading.getBoundingClientRect().top <= 120) current = heading; });
-      links.forEach(function (link, heading) {
-        if (heading === current) link.setAttribute('aria-current', 'location'); else link.removeAttribute('aria-current');
+    function makeNav() {
+      var nav=document.createElement('nav'); nav.setAttribute('aria-label','文章目录');
+      var base=headings.length ? Math.min.apply(null,headings.map(function(h){return Number(h.tagName.slice(1));})) : 1;
+      var list=document.createElement('ul'); nav.appendChild(list);
+      var stack=[{level:base,list:list,item:null}];
+      headings.forEach(function(h){
+        var level=Number(h.tagName.slice(1));
+        while(stack.length>1 && level<stack[stack.length-1].level) stack.pop();
+        var top=stack[stack.length-1];
+        if(level>top.level && top.item){ var sub=document.createElement('ul');top.item.appendChild(sub);top={level:level,list:sub,item:null};stack.push(top); }
+        var item=document.createElement('li'), a=document.createElement('a');
+        a.href=location.hash.split('?')[0]+'?id='+encodeURIComponent(h.id); a.textContent=h.textContent;
+        a.onclick=function(event){event.preventDefault();history.replaceState(null,'',a.href);h.scrollIntoView({block:'start'}); updateCurrent();};
+        item.appendChild(a);top.list.appendChild(item);top.item=item;
+        if(!links.has(h)) links.set(h,[]);links.get(h).push(a);
       });
+      if(!headings.length){var empty=document.createElement('span');empty.className='toc-empty';empty.textContent='本页暂无章节';nav.appendChild(empty);}
+      return nav;
     }
-    observer = new IntersectionObserver(updateCurrent, { rootMargin: '-32px 0px -65% 0px', threshold: [0, 1] });
-    headings.forEach(function (heading) { observer.observe(heading); });
-    var scheduled = false;
-    onScroll = function () {
-      if (scheduled) return;
-      scheduled = true;
-      requestAnimationFrame(function () { updateCurrent(); scheduled = false; });
-    };
-    window.addEventListener('scroll', onScroll, { passive: true });
-    updateCurrent();
+    var toc=document.createElement('details');toc.className='article-toc';toc.open=matchMedia('(min-width: 1280px)').matches;
+    var summary=document.createElement('summary');summary.textContent='本页目录';toc.append(summary,makeNav());article.prepend(toc);
+    article.querySelectorAll('p').forEach(function(p){if(p.textContent.trim().toUpperCase()==='[TOC]' && !p.closest('pre,blockquote,li') && p.childElementCount===0){var box=document.createElement('details');box.open=true;box.className='inline-toc';var title=document.createElement('summary');title.textContent='目录';box.append(title,makeNav());p.replaceWith(box);}});
+    function updateCurrent(){var current=headings[0];headings.forEach(function(h){if(h.getBoundingClientRect().top<=90)current=h;});links.forEach(function(group,h){group.forEach(function(a){if(h===current)a.setAttribute('aria-current','location');else a.removeAttribute('aria-current');});});}
+    var scheduled=false;onScroll=function(){if(!scheduled){scheduled=true;requestAnimationFrame(function(){updateCurrent();scheduled=false;});}};
+    window.addEventListener('scroll',onScroll,{passive:true});updateCurrent();
   }
   function themePlugin(hook) {
+    hook.mounted(function () {
+      var sidebar = document.querySelector('.sidebar');
+      if (sidebar) new MutationObserver(function () { enhanceNavigation(); }).observe(sidebar, { childList: true, subtree: true });
+    });
     hook.doneEach(function () {
       installThemeControl(); enhanceNavigation();
       var article = document.querySelector('.markdown-section');
@@ -196,7 +197,7 @@
       article.tabIndex = -1;
       enhanceCode(article); buildToc(article);
       var title = article.querySelector('h1');
-      document.title = title ? title.textContent + ' · 我的知识库' : '我的知识库';
+      document.title = title ? title.textContent + ' · ' + window.knowledgeSite.name : window.knowledgeSite.name;
     });
   }
   window.$docsify.plugins = (window.$docsify.plugins || []).concat(themePlugin);
